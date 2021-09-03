@@ -11,9 +11,9 @@ import spinner from '../../assets/spinner.gif';
 function ProductList() {
   // const [state, dispatch] = useStoreContext();
   const dispatch = useDispatch();
-  const { currentCategory } = state;
   const state = useSelector(state => state);
   const { loading, data } = useQuery(QUERY_PRODUCTS);
+  const { currentCategory } = state;
 
   useEffect(() => {
     if (data) {

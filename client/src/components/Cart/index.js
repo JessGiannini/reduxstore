@@ -6,6 +6,7 @@ import { idbPromise } from '../../utils/helpers';
 import CartItem from '../CartItem';
 import Auth from '../../utils/auth';
 // import { useStoreContext } from '../../utils/GlobalState';
+import { useDispatch, useSelector } from 'react-redux';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
 import './style.css';
 
@@ -13,7 +14,11 @@ const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
   // const [state, dispatch] = useStoreContext();
+  const dispatch = useDispatch();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  const cart = useSelector(state => state.cart);
+  const cartOpen = useSelector(state => state.cartOpen);
+
 
   useEffect(() => {
     if (data) {
@@ -29,10 +34,10 @@ const Cart = () => {
       dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
     }
 
-    if (!state.cart.length) {
+    if (!cart.length) {
       getCart();
     }
-  }, [state.cart.length, dispatch]);
+  }, [cart.length, dispatch]);
 
   function toggleCart() {
     dispatch({ type: TOGGLE_CART });
@@ -40,7 +45,7 @@ const Cart = () => {
 
   function calculateTotal() {
     let sum = 0;
-    state.cart.forEach((item) => {
+    cart.forEach((item) => {
       sum += item.price * item.purchaseQuantity;
     });
     return sum.toFixed(2);
@@ -49,7 +54,7 @@ const Cart = () => {
   function submitCheckout() {
     const productIds = [];
 
-    state.cart.forEach((item) => {
+    cart.forEach((item) => {
       for (let i = 0; i < item.purchaseQuantity; i++) {
         productIds.push(item._id);
       }
@@ -60,7 +65,7 @@ const Cart = () => {
     });
   }
 
-  if (!state.cartOpen) {
+  if (!cartOpen) {
     return (
       <div className="cart-closed" onClick={toggleCart}>
         <span role="img" aria-label="trash">
