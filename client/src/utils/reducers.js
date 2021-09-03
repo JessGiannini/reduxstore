@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+// import { useReducer } from "react";
 
 //accept state and action and returns a new state
 import {
@@ -13,7 +13,15 @@ import {
   TOGGLE_CART
 } from "./actions";
 
-export const reducer = (state, action) => {
+const initialState = {
+  products: [],
+  categories: [],
+  currentCategory: '',
+  cart: [],
+  cartOpen: false
+}
+
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     //case ADD_CAR: { ****activity 07-actions reducers.js****
     //   const newID = randomNum();
@@ -96,6 +104,8 @@ export const reducer = (state, action) => {
   }
 };
 
-export function useProductReducer(initialState) {
-  return useReducer(reducer, initialState)
-}
+// export function useProductReducer(initialState) {
+//   return useReducer(reducer, initialState)
+// }
+
+export default reducer;
