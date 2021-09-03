@@ -79,7 +79,7 @@ Open the browser at http://localhost:3000/
 
 ## Deployed Link
 
-* [See Live Site]()
+* [See Live Site](https://git.heroku.com/evening-shelf-64916.git)
 
 ## Author
 
